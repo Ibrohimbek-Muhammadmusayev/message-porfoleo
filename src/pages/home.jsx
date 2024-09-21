@@ -35,18 +35,22 @@ export default function Home() {
                     <input onChange={(e) => setSearch(e.target.value)} className="border border-white rounded p-1" type="text" placeholder="search message"/>
                 </div>
                 <div className="flex flex-col gap-[1px] px-4">
-                    <h1 className="text-[20px] font-bold text-white">All Message ( {searchdata.length} )</h1>
+                    <h1 className="text-[20px] font-bold text-white">All Messages ( {searchdata.length} )</h1>
                     {sortedData?.map((item, index) => (
                         <div key={index} className="bg-slate-600 rounded-md border border-white p-3 my-3">
                             <div className="flex justify-between flex-wrap">
                                 <p className="font-bold text-white">Gmail: {item.email}</p>
                                 <h1 className="text-slate-300 font-bold flex gap-[10px]"><span className="text-white">Tel:</span>{item.number}</h1>
                             </div>
-                            <div className="flex justify-between">
+                            <div className="flex justify-between flex-wrap">
                                 <h1 className="font-bold text-white">Name: {item.name}</h1>
+                                <h1 className="font-bold text-white">Time: {item.soat}</h1>
                             </div>
                             <div className="w-full font-light text-wrap text-white h-[80px] rounded p-1 border border-slate-400">
                                 <p>{item.message}</p>
+                            </div>
+                            <div className="flex justify-end items-center mt-[10px]">
+                                <button className="bg-red-600 px-[30px] rounded-[6px]">delete</button>
                             </div>
                         </div>
                     ))}
