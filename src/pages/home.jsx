@@ -23,6 +23,10 @@ export default function Home() {
         return item.name.toLowerCase().includes(search.toLowerCase())
     });
 
+    const sortedData = searchdata.sort((a, b) => {
+        return new Date(b.time) - new Date(a.time);
+    });
+
     return (
         <div className="w-full min-h-[100vh] bg-slate-800">
             <div className="max-w-[800px] mx-auto h-full">
@@ -32,13 +36,15 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col gap-[1px] px-4">
                     <h1 className="text-[20px] font-bold text-white">All Message ( {searchdata.length} )</h1>
-                    {searchdata?.map((item, index) => (
+                    {sortedData?.map((item, index) => (
                         <div key={index} className="bg-slate-600 rounded-md border border-white p-3 my-3">
-                            <div className="flex justify-between">
+                            <div className="flex justify-between flex-wrap">
                                 <p className="font-bold text-white">Gmail: {item.email}</p>
                                 <h1 className="text-slate-300 font-bold flex gap-[10px]"><span className="text-white">Tel:</span>{item.number}</h1>
                             </div>
+                            <div className="flex justify-between">
                                 <h1 className="font-bold text-white">Name: {item.name}</h1>
+                            </div>
                             <div className="w-full font-light text-wrap text-white h-[80px] rounded p-1 border border-slate-400">
                                 <p>{item.message}</p>
                             </div>
