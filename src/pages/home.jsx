@@ -1,31 +1,37 @@
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase/index";
 import { useEffect, useState } from "react";
+import { doc, deleteDoc } from "firebase/firestore";
 
 export default function Home() {
     const [data, setData] = useState([]);
     const [search, setSearch] = useState('');
+    const [deletes, setDelete] = useState('');
     
     const getData = async () => {
         const querySnapshot = await getDocs(collection(db, "massage"));
         const data = [];
         querySnapshot.forEach((doc) => {
-            data.push(doc.data());
+            data.push({...doc.data(), id:doc.id});
         });
         setData(data);
     };
 
     useEffect(() => {
-        getData();
-    }, []);
+        getData(); 
+    }, [deletes]);
 
     const searchdata = data.filter((item) => {
         return item.name.toLowerCase().includes(search.toLowerCase())
     });
-
     const sortedData = searchdata.sort((a, b) => {
         return new Date(b.time) - new Date(a.time);
     });
+
+    const handleDelete = async (id)=>{
+        await deleteDoc(doc(db, "massage", `${id}`));
+        setDelete(id);
+    }
 
     return (
         <div className="w-full min-h-[100vh] bg-slate-800">
@@ -50,7 +56,7 @@ export default function Home() {
                                 <p>{item.message}</p>
                             </div>
                             <div className="flex justify-end items-center mt-[10px]">
-                                <button className="bg-red-600 px-[30px] rounded-[6px]">delete</button>
+                                <button onClick={() => handleDelete(item.id)} className="bg-red-600 px-[30px] rounded-[6px]">delete</button>
                             </div>
                         </div>
                     ))}
