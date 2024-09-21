@@ -21,7 +21,7 @@ export default function Home() {
 
     const searchdata = data.filter((item) => {
         return item.name.toLowerCase().includes(search.toLowerCase()),
-        item.number.toLowerCase().includes(search.toLowerCase())
+        // item.number.toLowerCase().includes(search.toLowerCase())
     });
 
     return (
